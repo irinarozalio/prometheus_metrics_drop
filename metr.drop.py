@@ -1,10 +1,9 @@
 import datetime
 import time
-import requests  # Install this if you don't have it already.
-
+import requests  
 PROMETHEUS = 'http://localhost:9090/'
 
-# Midnight at the end of the previous month.
+
 end_of_month = datetime.datetime.today().replace(day=1).date()
 ts = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 tz_5 = (datetime.datetime.now() - datetime.timedelta(minutes=5)).strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -24,17 +23,6 @@ response_5 = requests.get(PROMETHEUS + '/api/v1/query',
 			'query': 'topk(10, count by (__name__)({__name__=~".+"}))',
 			'time': tunix_5})
 results_5 = response_5.json()['data']['result']
-
-# for result_now in results_now:
-# 	metric_name = result_now['metric']['__name__']
-# 	metric_values = result_now['value'][1]
-# 	print ('{0} = {1}'.format(metric_name,metric_values))
-# 	#print(' {metric}: {value[1]}'.format(**result))
-
-# for result_5 in results_5:
-# 	metric_name_5 = result_5['metric']['__name__']
-# 	metric_values_5 = result_5['value'][1]
-# 	print ('{0} = {1}'.format(metric_name_5,metric_values_5))
 
 for result_5 in results_5:
 	for result_now in results_now:
