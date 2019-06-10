@@ -8,22 +8,6 @@ volumes:
     prometheus_data: {}
 
 services:
-  flask-prometheus-example:
-    container_name: flask-prometheus
-    ports:
-      - "5100:5100"
-      - "8000:8000"
-    expose:
-      - 8000
-      - 5100
-    image: "myflask"
-    command: ["python3", "./api_flask.py"]
-    restart: unless-stopped
-    networks:
-      - monitor-net
-    labels:
-      org.label-schema.group: "monitoring"
-      
   prometheus:
     image: prom/prometheus
     container_name: prometheus

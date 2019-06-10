@@ -1,19 +1,38 @@
 global:
-  scrape_interval:     15s
+  scrape_interval: 15s
   evaluation_interval: 15s
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'docker-host-alpha'
+    monitor: docker-host-alpha
 
 # A scrape configuration containing exactly one endpoint to scrape.
 scrape_configs:
-  - job_name: 'prometheus'
-    scrape_interval: 10s
-    static_configs:
-      - targets: ['localhost:9090']
-metric_relabel_configs:
-  -   source_labels: '[ __name__ ]'
-      regex: my_too_large_metric
-      action: drop
+- job_name: prometheus
+  sample_limit: 5000
+  scrape_interval: 10s
+  static_configs:
+  - targets: [localhost:9090]
+  metric_relabel_configs:
+  - source_labels:
+    - __name__
+    regex: irinarozalio1
+    action: drop
+  - source_labels:
+    - __name__
+    regex: irinarozalio1
+    action: drop
+  - source_labels:
+    - __name__
+    regex: irinarozalio1
+    action: drop
+  - source_labels:
+    - __name__
+    regex: irinarozalio1
+    action: drop
+- job_name: flask_app
+  sample_limit: 5000
+  scrape_interval: 5s
+  static_configs:
+  - targets: [flask-prometheus:8000]

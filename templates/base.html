@@ -1,0 +1,44 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %} lang="he" {% endblock html_attribs %}>
+{%- block html %}
+	<head>
+		{%- block head %}
+			<title>{% block title %}מטבחי רגבה - פורטל IT{% endblock %}</title>
+			{%- block metas %}
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			{%- endblock metas %}
+			{%- block styles %}
+				<!-- Bootstrap -->
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+				<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}">
+			{%- endblock styles %}
+				<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+		{%- endblock head %}
+	</head>
+
+	<body{% block body_attribs %}{% endblock body_attribs %} class="text-right">
+		{% block body -%}
+			{% include "bootstrap/nav.html" %}
+			
+			
+			<div class="container container-fluid">
+			<div id="h_space" class="mb-2"> </div>
+				{% block content -%}
+			
+				{%- endblock content %}
+			</div>
+		{%- endblock body %}
+		
+		{% block scripts %}
+			{% include "bootstrap/base_scripts.html" %}
+		{%- endblock scripts %}
+	</body>
+
+{%- endblock html %}
+</html>
+{% endblock doc -%}

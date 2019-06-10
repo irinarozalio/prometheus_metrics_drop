@@ -1,0 +1,111 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %} lang="he" {% endblock html_attribs %}>
+{%- block html %}
+	<head>
+		{%- block head %}
+			<title>{% block title %} PROD-New Jobs{% endblock %}</title>
+			{%- block metas %}
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			{%- endblock metas %}
+			{%- block styles %}
+				<!-- Bootstrap -->
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+				<!--link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}"-->
+			{%- endblock styles %}
+				<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+		{%- endblock head %}
+		
+	</head>
+
+	<body{% block body_attribs %}{% endblock body_attribs %}>
+		{% block body -%}
+		<script>
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			
+			{% for message in messages %}
+			   $.notify('{{ message }}', 'success'); 
+			{% endfor %}
+			
+		  {% endif %}
+		{% endwith %}
+		</script>	
+			
+			<div class="container container-fluid border border-primary">
+				<div id="h_space" class="mb-2"> </div>
+		
+	<h3 style="text-align:center; ">Prod-New_Jobs</h3>
+<form method="POST" action="/get_job">				
+		<div class="form-row align-items-center">
+			<!--div class="col form-group">
+				{# getjobform.team.label #}
+				{# getjobform.team(class_="form-control") #}
+			</div-->
+			<div class="col form-group">
+				{{ getjobform.job_name.label }}
+				{{ getjobform.job_name(class_="form-control", required="") }}
+			</div>
+			<div class="col form-group">
+				{{ getjobform.rec.label }}
+				{{ getjobform.rec(class_="form-control", required="") }}
+			</div>
+		</div>
+		<div id="h_space" class="mb-2"> </div>
+		<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+		<div id="h_space" class="mb-2"> </div>
+ </form>
+		 	{{ row }}
+			BLFULLUNDO
+			X2705201100001y
+			
+			
+<div class="table-responsive-sm">
+	<table class="table-primary">
+	  <thead>
+		<tr>
+		  <th scope="col">OPPROG JOB NAME</th>
+		  <th scope="col">OPPROG PROG NAME</th>
+		  <th scope="col">OPPROG DESCRIPTION</th>
+		  <th scope="col">OPPROG APP SCRIPT</th>		  
+		  <th scope="col">CREATION DATE</th>
+		  <th scope="col">CPU ID</th>
+		  <th scope="col">OPPROG DB</th>
+		  <th scope="col">JOBDBCONNECT</th>
+		  <th scope="col">OPPROG SCH</th>
+		  <th scope="col">OPPAR</th>
+		  <th scope="col">OPPAR DB</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr> 
+			<th scope="row">{{row.OPPROG_JOB_NAME}}</th>
+			<td>{{row.OPPROG_PROG_NAME}}</td>
+			<td>{{row.OPPROG_DESCRIPTION}}</td>
+			<td>{{row.OPPROG_APP_SCRIPT}}</td>
+			<td>{{row.CREATION_DATE}}</td>
+			<td>{{row.CPU_ID}}</td>
+			<td>{{row.OPPROG_DB}}</td>
+			<td>{{row.JOBDBCONNECT}}</td>
+			<td>{{row.OPPROG_SCH}}</td>
+			<td>{{row.OPPAR}}</td>
+			<td>{{row.OPPAR_DB}}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+		{%- endblock body %}
+		
+		{% block scripts %}
+
+		{%- endblock scripts %}
+	</body>
+
+{%- endblock html %}
+</html>
+{% endblock doc -%}
