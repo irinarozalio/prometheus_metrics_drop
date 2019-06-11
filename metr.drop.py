@@ -25,21 +25,20 @@ def change_prom_yaml(filepath,metric_name):
 	#yaml.dump(data, sys.stdout)
 
 	for i in data['scrape_configs']:
-		pprint.pprint(str(i['job_name']))
-		if 'metric_relabel_configs' in data['scrape_configs'][0].keys():
-			pprint.pprint(data['scrape_configs'][0])
-			# if metric_name in data['scrape_configs'][0]['metric_relabel_configs'][1]['regex']:
-				#data['scrape_configs'][0]['metric_relabel_configs'].append(dict(source_labels=[ '__name__' ],regex='my_too_large_metric',action='drop'))
-			data['scrape_configs'][0]['metric_relabel_configs'].append(dict(source_labels=[ '__name__' ],regex=metric_name,action='drop'))
+		# pprint.pprint(i)
+		if 'metric_relabel_configs' in i.keys():
+			if (metric_name not in i['metric_relabel_configs'][0]['regex']):
+				pprint.pprint("YYY=" + i['metric_relabel_configs'][0]['regex'])
+				i['metric_relabel_configs'].append(dict(source_labels=[ '__name__' ],regex=metric_name,action='drop'))
+			else:
+				print('Metric ' + metric_name + " already exist.")
 		else:
-			pprint.pprint(data['scrape_configs'][0])
-			#data['scrape_configs'][0]['metric_relabel_configs'] = [dict(source_labels=[ '__name__' ],regex='my_too_large_metric',action='drop')]
-			data['scrape_configs'][0]['metric_relabel_configs'] = [dict(source_labels=[ '__name__' ],regex=metric_name,action='drop')]
-		print(metric_name)
-		with open(filepath, "w") as file:
-			yaml.indent(mapping=2)
-			yaml.dump(data, file)
-			#yaml.dump(data, sys.stdout)
+			i['metric_relabel_configs'] = [dict(source_labels=[ '__name__' ],regex=metric_name,action='drop')]
+
+	with open(filename, "w") as file:
+		yaml.indent(mapping=2)
+		yaml.dump(data, file)
+		yaml.dump(data, sys.stdout)
 
 def prom_reload(prometheus):
 	query = prometheus + '-/reload'

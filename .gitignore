@@ -1,1 +1,6 @@
 venv
+cassandra
+docker-compose.yml_cass
+docker-compose.yml_old
+metr.drop.py_old
+

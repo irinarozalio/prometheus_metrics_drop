@@ -19,20 +19,13 @@ scrape_configs:
     - __name__
     regex: irinarozalio1
     action: drop
-  - source_labels:
-    - __name__
-    regex: irinarozalio1
-    action: drop
-  - source_labels:
-    - __name__
-    regex: irinarozalio1
-    action: drop
-  - source_labels:
-    - __name__
-    regex: irinarozalio1
-    action: drop
 - job_name: flask_app
   sample_limit: 5000
   scrape_interval: 5s
   static_configs:
   - targets: [flask-prometheus:8000]
+  metric_relabel_configs:
+  - source_labels:
+    - __name__
+    regex: irinarozalio1
+    action: drop

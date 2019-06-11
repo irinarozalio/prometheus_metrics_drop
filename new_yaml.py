@@ -19,23 +19,47 @@ if __name__ == "__main__":
 	#d = dict(metric_relabel_configs=[dict(source_labels='[ __name__ ]',regex='my_too_large_metric',action='drop')])
 	yaml = YAML()
 	data = yaml_loader(filename)
-	pprint.pprint(data['scrape_configs'][0]['metric_relabel_configs'][1]['regex'])
+	#pprint.pprint(data['scrape_configs'][0]['metric_relabel_configs'][1]['regex'])
 	yaml.dump(data, sys.stdout)
+	print ("*************************")
 	# print(data['scrape_configs'][0]['metric_relabel_configs'])
 
 
-	for i in data['scrape_configs']:
-		pprint.pprint(str(i['job_name']))
-	quit()
-
-	if 'metric_relabel_configs' in data['scrape_configs'][0].keys():
-		data['scrape_configs'][0]['metric_relabel_configs'].append(dict(source_labels=[ '__name__' ],regex='my_too_large_metric',action='drop'))
-	else:
-		data['scrape_configs'][0]['metric_relabel_configs'] = [dict(source_labels=[ '__name__' ],regex='my_too_large_metric',action='drop')]
+	# pprint.pprint(data['scrape_configs'])
 	# pprint.pprint(data['scrape_configs'][0])
+
+	metric = "ira"
+	for i in data['scrape_configs']:
+		# pprint.pprint(i)
+	
+		if 'metric_relabel_configs' in i.keys():
+			if (metric not in i['metric_relabel_configs'][0]['regex']):
+				pprint.pprint("YYY=" + i['metric_relabel_configs'][0]['regex'])
+				i['metric_relabel_configs'].append(dict(source_labels=[ '__name__' ],regex=metric,action='drop'))
+			else:
+				print('Metric ' + metric + " already exist.")
+		else:
+			i['metric_relabel_configs'] = [dict(source_labels=[ '__name__' ],regex=metric,action='drop')]
+
+	print("++++++++++++++++++++++++++++++++++")
+
 	with open(filename, "w") as file:
 
 		yaml.indent(mapping=2)
 		yaml.dump(data, file)
 		yaml.dump(data, sys.stdout)
+
+	pprint.pprint(data['scrape_configs'][0])
+
+
+	# if 'metric_relabel_configs' in data['scrape_configs'][0].keys():
+	# 	data['scrape_configs'][0]['metric_relabel_configs'].append(dict(source_labels=[ '__name__' ],regex='my_too_large_metric',action='drop'))
+	# else:
+	# 	data['scrape_configs'][0]['metric_relabel_configs'] = [dict(source_labels=[ '__name__' ],regex='my_too_large_metric',action='drop')]
+	# # pprint.pprint(data['scrape_configs'][0])
+	# with open(filename, "w") as file:
+
+	# 	yaml.indent(mapping=2)
+	# 	yaml.dump(data, file)
+	# 	yaml.dump(data, sys.stdout)
 
