@@ -14,6 +14,27 @@ scrape_configs:
   scrape_interval: 10s
   static_configs:
   - targets: [localhost:9090]
+  metric_relabel_configs:
+  - source_labels:
+    - __name__
+    regex: prometheus_http_response_size_bytes_sum
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_http_request_duration_seconds_bucket
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_http_request_duration_seconds_sum
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_http_response_size_bytes_count
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_http_request_duration_seconds_count
+    action: drop
 - job_name: flask_app
   sample_limit: 5000
   scrape_interval: 5s
@@ -27,5 +48,9 @@ scrape_configs:
   metric_relabel_configs:
   - source_labels:
     - __name__
-    regex: fake_vendetta
+    regex: fake_zombi
+    action: drop
+  - source_labels:
+    - __name__
+    regex: fake_dissent
     action: drop
