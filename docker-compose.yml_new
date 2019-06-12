@@ -8,26 +8,6 @@ volumes:
     prometheus_data: {}
 
 services:
-  cassandra:
-    image: cassandra:3.11.2
-    container_name: cassandra
-    volumes:
-      - ./cassandra/:/var/lib/cassandra/apache-cassandra-2.2.4/
-      - ./cassandra/conf/:/var/lib/cassandra/apache-cassandra-2.2.4/conf/
-    ports:
-      - "9042:9042"
-    expose:
-      - 9042
-    environment:
-      - "MAX_HEAP_SIZE=256M"
-      - "HEAP_NEWSIZE=128M"
-    restart: always
-    healthcheck:
-      test: ["CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-e describe keyspaces"]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-
   flask-prometheus-example:
     container_name: flask-prometheus
     ports:

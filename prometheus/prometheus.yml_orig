@@ -19,3 +19,8 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
   - targets: ['flask-prometheus:8000']
+- job_name: 'fake_exporter'
+  sample_limit: 5000
+  scrape_interval: 5s
+  static_configs:
+  - targets: ['35.222.74.15:5000']
