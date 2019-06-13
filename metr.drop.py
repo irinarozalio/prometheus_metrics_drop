@@ -72,39 +72,33 @@ if __name__ == "__main__":
 					'time': tunix_5})
 		# print(response_5.json())
 		# print(response_5.url)
-		# quit()
 		results_5 = response_5.json()['data']['result']
 
 		print("******************************")
 		print("Starting Target=" + prom_target)
 		# print(response_now.url)
 
-		# prom_list = {}
 		for result_now in results_now:
 			metric_name = result_now['metric']['__name__']
 			metric_values = int(result_now['value'][1])
 			prom_list[metric_name] = {'now': metric_values, 'last_5': None}
 
-		# print(results_5)
 		for result_5 in results_5:
 			metric_name = result_5['metric']['__name__']
-			# print(metric_name)
 			metric_values = int(result_5['value'][1])
 			if metric_name in prom_list.keys():
 				prom_list[metric_name]['last_5'] = metric_values
-		# quit()
-		# pprint.pprint(prom_list)
+
 		for k, v in prom_list.items():
 			if v['now'] != v['last_5'] and v['last_5'] and v['now']:
 				perc = abs(float(((v['now'] - v['last_5']) * 100 ) / v['now']))				
 				if perc > 30:
-					# print(perc)
 					print(k, v)
-					#print(prom_list[metric_name])
+					print("********************************")
+					print("Dropping metrics: " + k)
 					# prom_target = '35.222.74.15:5000'
 					# metric_name='fake_aborting'
 					change_prom_yaml(filename,k,prom_target)
-		# quit()
 	prom_reload(prometheus)
 	
 	

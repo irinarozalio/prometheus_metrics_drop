@@ -3,4 +3,8 @@ cassandra
 docker-compose.yml_cass
 docker-compose.yml_old
 metr.drop.py_old
-
+docker-compose.yml_new
+new_yaml.py
+prom_reload.py
+prometheus/prometheus.yml_old
+prometheus/prometheus.yml_orig
