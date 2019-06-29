@@ -1,0 +1,10 @@
+groups: 
+- name: example
+  rules: 
+  - alert: HighErrorRate
+    expr: prometheus_notifications_latency_seconds_count{job="prometheus"} > 0.5
+    for: 1m
+    labels:
+      severity: critical
+    annotations: 
+      summary: "Bla Bla Bla"

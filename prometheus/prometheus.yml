@@ -6,34 +6,89 @@ global:
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
     monitor: docker-host-alpha
-
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 35.222.74.15:9093
+rule_files:
+- /etc/prometheus/alert.rules
 # A scrape configuration containing exactly one endpoint to scrape.
+remote_write:
+- url: http://prometheus_postgresql_adapter:9201/write
+remote_read:
+- url: http://prometheus_postgresql_adapter:9201/read
 scrape_configs:
 - job_name: prometheus
-  sample_limit: 5000
   scrape_interval: 10s
   static_configs:
-  - targets: [localhost:9090]
+  - targets: [localhost:9090, 10.128.0.4:9091]
   metric_relabel_configs:
   - source_labels:
     - __name__
-    regex: prometheus_http_response_size_bytes_bucket
+    regex: prometheus_target_sync_length_seconds_count
     action: drop
   - source_labels:
     - __name__
-    regex: prometheus_sd_updates_total
+    regex: prometheus_target_reload_length_seconds
     action: drop
   - source_labels:
     - __name__
-    regex: prometheus_sd_received_updates_total
+    regex: net_conntrack_dialer_conn_failed_total
     action: drop
-- job_name: flask_app
-  sample_limit: 5000
-  scrape_interval: 5s
+  - source_labels:
+    - __name__
+    regex: prometheus_target_sync_length_seconds_sum
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_target_reload_length_seconds_sum
+    action: drop
+  - source_labels:
+    - __name__
+    regex: net_conntrack_dialer_conn_closed_total
+    action: drop
+  - source_labels:
+    - __name__
+    regex: net_conntrack_dialer_conn_established_total
+    action: drop
+  - source_labels:
+    - __name__
+    regex: net_conntrack_dialer_conn_attempted_total
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_sd_discovered_targets
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_target_interval_length_seconds
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_target_reload_length_seconds_count
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_target_scrape_pool_sync_total
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_target_interval_length_seconds_sum
+    action: drop
+  - source_labels:
+    - __name__
+    regex: prometheus_target_interval_length_seconds_count
+    action: drop
+- job_name: node_exporter
   static_configs:
-  - targets: [flask-prometheus:8000]
+  - targets: [node_exporter:9100]
+- job_name: elasticsearch_exporter
+  static_configs:
+  - targets: [10.128.0.4:9108]
 - job_name: fake_exporter
-  sample_limit: 5000
   scrape_interval: 5s
   static_configs:
   - targets: [35.222.74.15:5000]
+
+

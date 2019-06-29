@@ -68,7 +68,19 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
-      
+  
+  elasticsearch_exporter:
+    image: justwatch/elasticsearch_exporter:1.0.2
+    command:
+      - '-es.uri=http://10.128.0.4:9200'
+    restart: unless-stopped
+    ports:
+      - "9108:9108"
+    expose:
+      - 9108
+    networks:
+      - monitor-net
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -77,6 +89,7 @@ services:
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=1d'
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'

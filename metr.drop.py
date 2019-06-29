@@ -91,14 +91,18 @@ if __name__ == "__main__":
 
 		for k, v in prom_list.items():
 			if v['now'] != v['last_5'] and v['last_5'] and v['now']:
-				perc = abs(float(((v['now'] - v['last_5']) * 100 ) / v['now']))				
-				if perc > 30:
+				perc = abs(float(((v['now'] - v['last_5']) * 100 ) / v['now']))			
+				if perc > 5:
 					print(k, v)
 					print("********************************")
 					print("Dropping metrics: " + k)
 					# prom_target = '35.222.74.15:5000'
 					# metric_name='fake_aborting'
 					change_prom_yaml(filename,k,prom_target)
+			if v['last_5'] is None and v['now'] > 1000:
+				#The metric v wasn't exist before 5 min 
+				print("Dropping metrics: " + k)
+				change_prom_yaml(filename,k,prom_target)
 	prom_reload(prometheus)
 	
 	
